@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Worker{% endblock %}
+
+{% block body %}
+    <h1>Worker</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ worker.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ worker.name }}</td>
+            </tr>
+            <tr>
+                <th>Surname</th>
+                <td>{{ worker.surname }}</td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td>{{ worker.username }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ worker.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_worker_index') }}">back to list</a>
+    {% if is_granted('ROLE_OWNER') %}
+    {% else %}
+    <a href="{{ path('app_worker_edit', {'id': worker.id}) }}">edit</a>
+
+    {{ include('worker/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

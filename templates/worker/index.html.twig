@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Worker index{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Workers List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if is_granted('ROLE_OWNER') %}
+                    <table class="table" id="workerlist">
+                        <thead>
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Surname</th>
+                            <th>Username</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for worker in workers %}
+                            <tr>
+                                <td>{{ worker.id }}</td>
+                                <td>{{ worker.name }}</td>
+                                <td>{{ worker.surname }}</td>
+                                <td>{{ worker.username }}</td>
+                                <td>{{ worker.description }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="10">no records found</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                {% else %}
+                <table class="table" id="workerlist">
+                    <thead>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Surname</th>
+                        <th>Username</th>
+                        <th>Description</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for worker in workers %}
+                        <tr>
+                            <td>{{ worker.id }}</td>
+                            <td>{{ worker.name }}</td>
+                            <td>{{ worker.surname }}</td>
+                            <td>{{ worker.username }}</td>
+                            <td>{{ worker.description }}</td>
+                            <td class="td-actions text-right">
+                                <a href="{{ path('app_worker_show', {'id': worker.id}) }}">
+                                    <i class="material-icons">open_in_new</i>
+                                </a>
+                                <a href="{{ path('app_worker_edit', {'id': worker.id}) }}">edit</a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="{{ path('app_worker_new') }}">Create new</a>
+        {% endif %}
+{% endblock %}
+{% block add_script%}
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                let workerTable = $("#workerlist").DataTable({
+                    "columnDefs": [
+                        {
+                            "orderable": false,
+                            targets: [4,5]
+                        }
+                    ],
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
+            })
+        })
+    </script>
+{% endblock %}

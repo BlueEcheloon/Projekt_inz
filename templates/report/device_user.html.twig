@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Device with no user counter</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if is_granted('ROLE_OWNER') %}
+                {% else %}
+                <div class="row border-bottom">
+                    <div class="col text-center">
+                        <button class="btn btn-warning mb-3 DeviceNoUser">Export table to Excel Spreadsheet</button>
+                    </div>
+                </div>
+                {% endif %}
+                <table class="table" id="devicenouserlist" data-cols-width="25,8">
+                    <thead>
+                    <tr>
+                        <th>Device Name</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for device in devices %}
+                        <tr>
+                            <td>{{ device.name }}</td>
+                            <td>{% if device.specification %}
+                                {% if device.specification.status =='boxed' %}
+                                                                            <i class="material-icons">inventory_2</i>
+                                                                        {% elseif device.specification.status =='ready'%}
+                                                                            <i class="material-icons">inventory</i>
+                                                                        {% elseif device.specification.status =='working'%}
+                                                                            <i class="material-icons">face</i>
+                                                                        {% elseif device.specification.status =='faulty'%}
+                                                                            <i class="material-icons">bug_report</i>
+                                                                        {% elseif device.specification.status =='service'%}
+                                                                            <i class="material-icons">store</i>
+                                                                        {% elseif device.specification.status =='destroy'%}
+                                                                            <i class="material-icons">delete_forever</i>
+
+                                {% else %}
+                                    No Status set
+                                {% endif %}
+
+                            </td>
+                        </tr>
+
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No Device without User found</td>
+                            <td colspan="d-none"></td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-rose" href="{{ path('app_report_index') }}">Return to Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block add_script %}
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $(".exportDeviceNoUser").click(function (e){
+                    let tableId = $(this).data("tid");
+                    let tableDeviceNoUser = document.querySelector("#devicenouserlist").cloneNode(true);
+                    tableDeviceNoUser.innerHTML = tableDeviceNoUser.innerHTML.replace(/>-</g,'><');
+
+                    let name = 'Device_with_no_user.xlsx';
+                    let book = TableToExcel.tableToBook(tableDeviceNoUser,{
+                        sheet:{
+                            name: "Device with no user"
+                        }
+                    });
+                    TableToExcel.save(book,name)
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+
+
+

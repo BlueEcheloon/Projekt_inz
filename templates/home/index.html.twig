@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="card align-items-center justify-content-center">
+                    <div class="card-stats">
+                        <div class="card-header card-header-success card-header-icon">
+                            <div class="card-icon">
+                                <i class="material-icons">person</i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Welcome {{ admin.name}} {{ admin.surname }}!</h3>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col d-table">
+                                <ul class="pagination pagination-info d-table-cell align-middle">
+                                    <li class="page-item active w-100">
+                                        <a class="page-link" style="cursor: default">Firm: NoName Sp. z. o. o.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <div class="col d-table">
+                                <ul class="pagination pagination-info d-table-cell align-middle">
+                                    <li class="page-item active w-100">
+                                        <a class="page-link" style="cursor: default">Role:  </a>
+{#                                        <a class="page-link" style="cursor: default">Role: {% for x in admin.roles|filter(x => x='ROLE_OWNER' or x='ROLE_ADMIN' or x='ROLE_MANAGER') -%} {{ x}} {% endfor%} </a>#}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col h-100 d-table">
+                                <ul class="pagination pagination-info d-table-cell align-middle">
+                                    <li class="page-item active w-100">
+                                        <a class="page-link" style="cursor: default">Firm: NoName Sp. z. o. o.</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

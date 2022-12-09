@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Comment{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+                <i class="material-icons">comment</i>
+            </div>
+            <h3 class="card-title">Edit Comment</h3>
+        </div>
+        <div class="card-body">
+            {{ include('comment/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('comment/_delete_form.html.twig') }}
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{{ path('app_device_show',{'id': comment.device.id}) }}">back to device</a>
+        </div>
+    </div>
+{% endblock %}

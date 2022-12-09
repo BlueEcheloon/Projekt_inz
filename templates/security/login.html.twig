@@ -1,0 +1,52 @@
+{% extends 'base_login.html.twig' %}
+{% block title %}Log In!{% endblock %}
+{% block body %}
+<form class="form" method="post" role="form">
+    <div class="card card-login">
+        <div class="card-header card-header-success text-center">
+            <h4>Log in!</h4>
+        </div>
+        <div class="card-body">
+            {% if error %}
+                <div class="alert alert-danger text-danger d-none text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {% if app.user %}
+                <div class="mb-3">
+                    You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                </div>
+            {% endif %}
+            <div class="bmd-form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="material-icons">face</i>
+                        </div>
+                    </div>
+                    <label for="inputUsername" hidden>Username</label>
+                    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Login..." autocomplete="username" required autofocus>
+                </div>
+            </div>
+            <div class="bmd-form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="material-icons">lock_outline</i>
+                        </div>
+                    </div>
+                    <label for="inputPassword" hidden>Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password... " autocomplete="current-password" required>
+                </div>
+            </div>
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}"
+            >
+{#            <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.refreshToken('authenticate') }}" />#}
+{#            <input type="hidden" name="_csrf_token" value="{% render('') %}" />#}
+        </div>
+        <div class="card-footer justify-content-center">
+            <button class="btn btn-lg btn-rose btn-link" type="submit">Sign in</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

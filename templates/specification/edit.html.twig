@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Specification{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+                <i class="material-icons">developer_board</i>
+            </div>
+            <h3 class="card-title">Edit Specification for {{ specification.device.name }}</h3>
+        </div>
+        <div class="card-body">
+            {{ include('specification/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('specification/_delete_form.html.twig') }}
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{{ path('app_device_show',{'id': specification.device.id}) }}">back to device</a>
+        </div>
+    </div>
+{% endblock %}

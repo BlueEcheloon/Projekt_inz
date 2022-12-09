@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Manufacturer List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if is_granted('ROLE_OWNER') %}
+                {% else %}
+                <div class="row border-bottom">
+                    <div class="col text-center">
+                        <button class="btn btn-warning mb-3 exportManufacturer">Export table to Excel Spreadsheet</button>
+                    </div>
+                </div>
+                {% endif %}
+                <table class="table" id="manufacturerlist" data-cols-width="25,8">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for man in manufacturers %}
+                        <tr>
+                            <td>{{ man.manufacturer }}</td>
+                            <td>{{ man.counter }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No Manufacturers found</td>
+                            <td colspan="d-none"></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-rose" href="{{ path('app_report_index') }}">Return to Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block add_script %}
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $(".exportManufacturer").click(function (e){
+                    let tableId = $(this).data("tid");
+                    let tableManunfacturer = document.querySelector("#manufacturerlist").cloneNode(true);
+                    tableManunfacturer.innerHTML = tableManunfacturer.innerHTML.replace(/>-</g,'><');
+
+                    let name = 'Manufacturers.xlsx';
+                    let book = TableToExcel.tableToBook(tableManunfacturer,{
+                        sheet:{
+                            name: "Manufacturers List"
+                        }
+                    });
+                    TableToExcel.save(book,name)
+                })
+            })
+        })
+    </script>
+{% endblock %}
+

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Groups index{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Groups List</h4>
+        </div>
+        <div class="card-body">
+            {% if is_granted('ROLE_OWNER') %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for group in groups %}
+                        <tr>
+                            <td>{{ group.id }}</td>
+                            <td>{{ group.name }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">no groups found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for group in groups %}
+                        <tr>
+                            <td>{{ group.id }}</td>
+                            <td>{{ group.name }}</td>
+                            <td>
+                                <a href="{{ path('app_groups_show', {'id': group.id}) }}">
+                                    <i class="material-icons">open_in_new</i>
+                                </a>
+                                <a href="{{ path('app_groups_edit', {'id': group.id}) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <a href="{{ path('app_groups_new') }}">Create new</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

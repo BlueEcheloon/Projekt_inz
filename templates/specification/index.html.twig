@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Specification index{% endblock %}
+
+{% block body %}
+    <h1>Specification index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Os_version</th>
+                <th>Memory</th>
+                <th>Processor</th>
+                <th>Motherboard</th>
+                <th>Graphics</th>
+                <th>Harddisk</th>
+                <th>Antivirus</th>
+                <th>Serial_number</th>
+                <th>Date_of_purchase</th>
+                <th>Warranty_exp</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for specification in specifications %}
+            <tr>
+                <td>{{ specification.id }}</td>
+                <td>{{ specification.osVersion }}</td>
+                <td>{{ specification.memory }}</td>
+                <td>{{ specification.processor }}</td>
+                <td>{{ specification.motherboard }}</td>
+                <td>{{ specification.graphics }}</td>
+                <td>{{ specification.harddisk }}</td>
+                <td>{{ specification.antivirus }}</td>
+                <td>{{ specification.serialNumber }}</td>
+                <td>{{ specification.dateOfPurchase ? specification.dateOfPurchase|date('Y-m-d') : '' }}</td>
+                <td>{{ specification.warrantyExp ? specification.warrantyExp|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_specification_show', {'id': specification.id}) }}">show</a>
+                    <a href="{{ path('app_specification_edit', {'id': specification.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_specification_new') }}">Create new</a>
+{% endblock %}

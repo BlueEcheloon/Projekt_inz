@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Device index{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Device List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="devicelist">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Model</th>
+                        <th>Manufacturer</th>
+                        <th>Ip_address</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th class="text-center" data-exclude="true">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for device in devices %}
+                        <tr>
+                            <td>{{ device.name }}</td>
+                            <td>{{ device.type }}</td>
+                            <td>{{ device.model }}</td>
+                            <td>{{ device.manufacturer }}</td>
+                            <td>{{ device.ipAddress }}</td>
+                            <td>{{ device.location }}</td>
+                            <td>
+                                {% if device.specification %}
+                                {% if device.specification.status =='boxed' %}
+                                <i class="material-icons">inventory_2</i>
+                            {% elseif device.specification.status =='ready'%}
+                                <i class="material-icons">inventory</i>
+                            {% elseif device.specification.status =='working'%}
+                                <i class="material-icons">face</i>
+                            {% elseif device.specification.status =='faulty'%}
+                                <i class="material-icons">bug_report</i>
+                            {% elseif device.specification.status =='service'%}
+                                <i class="material-icons">store</i>
+                            {% elseif device.specification.status =='destroy'%}
+                                <i class="material-icons">delete_forever</i>
+                            {% endif %}
+                            {% else %}
+                                Not Set
+                            {% endif %}
+                            </td>
+                            <td class="td-actions text-right">
+                                <a href="{{ path('app_device_show', {'id': device.id}) }}">
+                                    <i class="material-icons">open_in_new</i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col text-center">
+            <a class="btn btn-success btn-sm" href="{{ path('app_device_new') }}">Add new Device</a>
+        </div>
+    </div>
+{% endblock %}
+{% block add_script%}
+   <script>
+       $(document).ready(function () {
+           $().ready(function () {
+               let deviceTable = $("#devicelist").DataTable({
+                   "columnDefs": [
+                       {
+                           "orderable": false,
+                           targets: [5,7]
+
+                       }
+                   ],
+                   "order": [[0,  'asc']],
+                   "pageLength": 25
+               });
+           })
+       })
+   </script>
+{% endblock %}

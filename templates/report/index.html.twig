@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reports List{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Reports List</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" id="raportlist">
+                    <thead>
+                    <tr>
+                        <th>Report name</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a href="{{ path('app_report_manufacturer') }}">Manufacturers</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ path('app_report_model_summary') }}">Model Summary</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ path('app_report_type') }}">Type</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ path('app_report_windows') }}">Windows</a></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{{ path('app_report_warranty_exp') }}">Warranty expiration</a></td>
+                        <td></td>
+                    </tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <tr>
+                        <td><a href="{{ path('app_report_device_user') }}">Device without User</a></td>
+                        <td></td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,6 @@
+form .form-group select.form-control{
+    position: initial;
+}
+.card form{
+    margin: 20px;
+}

@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">list</i>
+            </div>
+            <h4 class="card-title">Windows counter</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                {% if is_granted('ROLE_OWNER') %}
+                {% else %}
+                <div class="row border-bottom">
+                    <div class="col text-center">
+                        <button class="btn btn-warning mb-3 exportWindows">Export table to Excel Spreadsheet</button>
+                    </div>
+                </div>
+                {% endif %}
+                <table class="table" id="windowslist" data-cols-width="25,8">
+                    <thead>
+                    <tr>
+                        <th>OS Type</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for window in windows %}
+                        <tr>
+                            <td>{{ window.os }}</td>
+                            <td>{{ window.counter }}</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="10" class="text-center">No OS Type found</td>
+                            <td colspan="d-none"></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-rose" href="{{ path('app_report_index') }}">Return to Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block add_script %}
+    <script>
+        $(document).ready(function () {
+            $().ready(function () {
+                $(".exportWindows").click(function (e){
+                    let tableId = $(this).data("tid");
+                    let tableWindows = document.querySelector("#windowslist").cloneNode(true);
+                    tableWindows.innerHTML = tableWindows.innerHTML.replace(/>-</g,'><');
+
+                    let name = 'Windows.xlsx';
+                    let book = TableToExcel.tableToBook(tableWindows,{
+                        sheet:{
+                            name: "Windows List"
+                        }
+                    });
+                    TableToExcel.save(book,name)
+                })
+            })
+        })
+    </script>
+{% endblock %}
+
+
