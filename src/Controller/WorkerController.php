@@ -35,7 +35,10 @@ class WorkerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $workerRepository->save($worker, true);
-
+            $this->addFlash(
+                'notice',
+                'A new Worker has been added'
+            );
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,7 +65,10 @@ class WorkerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $workerRepository->save($worker, true);
-
+            $this->addFlash(
+                'notice',
+                'Worker has been edited'
+            );
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -79,6 +85,10 @@ class WorkerController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$worker->getId(), $request->request->get('_token'))) {
             $device=$deviceRepository->findBy(['user'=>$worker->getId()]);
             $workerRepository->remove($worker, true);
+            $this->addFlash(
+                'notice',
+                'Worker has been removed'
+            );
         }
 
         return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);

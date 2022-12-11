@@ -36,7 +36,10 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->save($comment, true);
-
+            $this->addFlash(
+                'notice',
+                'Comment for this device has been added'
+            );
             return $this->redirectToRoute('app_device_show', ['id'=>$device_id], Response::HTTP_SEE_OTHER);
         }
 
@@ -64,7 +67,10 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $commentRepository->save($comment, true);
             $deviceId=$comment->getDevice()->getId();
-
+            $this->addFlash(
+                'notice',
+                'Comment for this device has been edited'
+            );
             return $this->redirectToRoute('app_device_show', ['id'=>$deviceId], Response::HTTP_SEE_OTHER);
         }
 
@@ -81,6 +87,10 @@ class CommentController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
             $deviceId=$comment->getDevice()->getId();
             $commentRepository->remove($comment, true);
+            $this->addFlash(
+                'notice',
+                'Comment for this device has been removed'
+            );
             return $this->redirectToRoute('app_device_show', ['id'=>$deviceId], Response::HTTP_SEE_OTHER);
         }
         else{

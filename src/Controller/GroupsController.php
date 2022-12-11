@@ -33,7 +33,10 @@ class GroupsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $groupsRepository->save($group, true);
-
+            $this->addFlash(
+                'notice',
+                'A new Group has been created'
+            );
             return $this->redirectToRoute('app_groups_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -60,7 +63,10 @@ class GroupsController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $groupsRepository->save($group, true);
-
+            $this->addFlash(
+                'notice',
+                'Group has been edited'
+            );
             return $this->redirectToRoute('app_groups_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,6 +82,10 @@ class GroupsController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
             $groupsRepository->remove($group, true);
+            $this->addFlash(
+                'notice',
+                'Group has been removed'
+            );
         }
 
         return $this->redirectToRoute('app_groups_index', [], Response::HTTP_SEE_OTHER);

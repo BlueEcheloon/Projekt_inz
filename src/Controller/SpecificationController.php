@@ -36,7 +36,10 @@ class SpecificationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $specificationRepository->save($specification, true);
-
+            $this->addFlash(
+                'notice',
+                'Specification has been created for device'
+            );
             return $this->redirectToRoute('app_device_show', ['id'=>$device_id], Response::HTTP_SEE_OTHER);
         }
 
@@ -62,7 +65,10 @@ class SpecificationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $specificationRepository->save($specification, true);
-
+            $this->addFlash(
+                'notice',
+                'Specification has been edited'
+            );
             return $this->redirectToRoute('app_device_show', ['id'=>$device_id], Response::HTTP_SEE_OTHER);
         }
 
@@ -77,6 +83,10 @@ class SpecificationController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$specification->getId(), $request->request->get('_token'))) {
             $specificationRepository->remove($specification, true);
+            $this->addFlash(
+                'notice',
+                'Specification has been removed'
+            );
         }
 
         return $this->redirectToRoute('app_specification_index', [], Response::HTTP_SEE_OTHER);

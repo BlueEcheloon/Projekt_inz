@@ -40,6 +40,10 @@ class DeviceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $deviceRepository->save($device, true);
             $id=$device->getId();
+            $this->addFlash(
+                'notice',
+                'Device has been created'
+            );
             return $this->redirectToRoute('app_specification_new', ['device_id'=>$id], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,6 +87,10 @@ class DeviceController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $deviceRepository->save($device, true);
+            $this->addFlash(
+                'notice',
+                'Device has been edited'
+            );
 
             return $this->redirectToRoute('app_device_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -103,9 +111,17 @@ class DeviceController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if($device->getUser()){
                 $device->getSpecification()->setStatus('working');
+                $this->addFlash(
+                    'notice',
+                    'User for this device has been changed'
+                );
             }
             else{
                 $device->getSpecification()->setStatus('ready');
+                $this->addFlash(
+                    'notice',
+                    'User for this device has been removed'
+                );
             }
             $deviceRepository->save($device, true);
             return $this->redirectToRoute('app_device_show', ['id'=>$id], Response::HTTP_SEE_OTHER);
@@ -129,6 +145,10 @@ class DeviceController extends AbstractController
             $spec=$specificationRepository->find($device);
             $specificationRepository->remove($spec,true);
             $deviceRepository->remove($device, true);
+            $this->addFlash(
+                'notice',
+                'Device and related entities has been removed'
+            );
         }
 
         return $this->redirectToRoute('app_device_index', [], Response::HTTP_SEE_OTHER);

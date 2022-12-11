@@ -188,6 +188,11 @@
                 <!-- End Navbar -->
                 <div class="content">
                     <div class="container-fluid">
+                        {% for message in app.flashes('notice') %}
+                        <div class="alert alert-info" role="alert">
+                            {{message}}
+                        </div>
+                        {% endfor %}
                         {% block body %}{% endblock %}
                     </div>
                 </div>

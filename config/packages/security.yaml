@@ -21,8 +21,7 @@ security:
             custom_authenticator: App\Security\AppCustomAuthenticator
             logout:
                 path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
+                target: app_login
 #        secured_area:
 #            # ...
 #            form_login:
@@ -41,7 +40,7 @@ security:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/manager, roles: ROLE_MANAGER }
          - { path: ^/owner, roles: ROLE_OWNER }
-#         - { path: ^/login$, roles: ROLE_NON_AUTH }
+         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
