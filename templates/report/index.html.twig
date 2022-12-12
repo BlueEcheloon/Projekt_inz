@@ -46,6 +46,12 @@
                         <td></td>
                     </tr>
                     {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <tr>
+                            <td><a href="{{ path('app_report_harddisk') }}">Hard Drive Types</a></td>
+                            <td></td>
+                        </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
