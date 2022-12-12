@@ -25,12 +25,14 @@ class ReportController extends AbstractController
     public function manufacturer(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-        if($this->isGranted('ROLE_ADMIN')){
-            $manufacturers = $reportUtil->reportManufacturer();
-        }
+//        if($this->isGranted('ROLE_ADMIN')){
+//            $manufacturers = $reportUtil->reportManufacturer();
+//        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $manufacturers=$reportUtil->reportManufacturer_worker($admin_group);
+        }else{
+            $manufacturers = $reportUtil->reportManufacturer();
         }
         return $this->render("report/manufacturer.html.twig",[
             'manufacturers'=>$manufacturers
@@ -40,12 +42,11 @@ class ReportController extends AbstractController
     public function type(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-        if($this->isGranted('ROLE_ADMIN')){
-            $type = $reportUtil->reportType();
-        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $type=$reportUtil->reportType_worker($admin_group);
+        }else{
+            $type = $reportUtil->reportType();
         }
         return $this->render("report/type.html.twig",[
             'type'=>$type
@@ -55,12 +56,11 @@ class ReportController extends AbstractController
     public function windows(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-        if($this->isGranted('ROLE_ADMIN')){
-            $windows = $reportUtil->reportWindows();
-        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $windows = $reportUtil->reportWindows_worker($admin_group);
+        }else{
+            $windows = $reportUtil->reportWindows();
         }
         return $this->render("report/windows.html.twig",[
             'windows'=>$windows
@@ -70,12 +70,11 @@ class ReportController extends AbstractController
     public function model_summary(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-        if($this->isGranted('ROLE_ADMIN')){
-            $model = $reportUtil->reportModelSummary();
-        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $model = $reportUtil->reportModelSummary_worker($admin_group);
+        }else{
+            $model = $reportUtil->reportModelSummary();
         }
         return $this->render("report/model_summary.html.twig",[
             'models'=>$model
@@ -86,23 +85,33 @@ class ReportController extends AbstractController
     public function warranty_exp(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-        if($this->isGranted('ROLE_ADMIN')){
-            $devices = $reportUtil->reportWarrantyExp();
-        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $devices = $reportUtil->reportWarrantyExp_worker($admin_group);
+        }else{
+            $devices = $reportUtil->reportWarrantyExp();
         }
         return $this->render("report/warranty_exp.html.twig",[
             'devices'=>$devices
         ]);
     }
-    #[IsGranted("ROLE_ADMIN")]
+
+    #[IsGranted("ROLE_REPORT")]
     #[Route('/device_user', name: 'app_report_device_user')]
     public function device_user(ReportUtil $reportUtil): Response
     {
         $devices = $reportUtil->reportDeviceWithoutUser();
         return $this->render("report/device_user.html.twig",[
+            'devices'=>$devices
+        ]);
+    }
+
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route('/harddisk', name: 'app_report_harddisk')]
+    public function hard_disk_types(ReportUtil $reportUtil): Response
+    {
+        $devices = $reportUtil->reportHardDiskType();
+        return $this->render("report/harddisk.html.twig",[
             'devices'=>$devices
         ]);
     }

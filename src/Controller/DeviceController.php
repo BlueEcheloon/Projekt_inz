@@ -69,10 +69,12 @@ class DeviceController extends AbstractController
                 'group' => $group[0],
             ]);
         }else{
-            return $this->render('device/show2.html.twig', [
+            return $this->render('device/show.html.twig', [
                 'device' => $device,
                 'specification' =>$spec[0],
                 'comments'=>$comments,
+                'worker'=>null,
+                'group' => null,
             ]);
         }
 //        $spec=$specificationRepository->findOneBy($device);

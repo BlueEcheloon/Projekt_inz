@@ -138,6 +138,15 @@ class DeviceRepository extends ServiceEntityRepository
         ;
         return $table;
     }
+//    public function findHardDiskType():array{
+//        $table = $this->createQueryBuilder('d')
+//            ->select('d.name,d.type, d.model')
+//            ->leftJoin('d.specification','s','d.specification=s.id')
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//        return $table;
+//    }
 //    public function findManufacturer_2($manufacturer): array
 //    {
 //        return $this->createQueryBuilder('d')

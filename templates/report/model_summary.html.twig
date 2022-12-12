@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 {% if is_granted('ROLE_OWNER') %}
-                {% else %}
+                {% elseif is_granted('ROLE_REPORT_GEN') %}
                 <div class="row border-bottom">
                     <div class="col text-center">
                         <button class="btn btn-warning mb-3 exportModel">Export table to Excel Spreadsheet</button>

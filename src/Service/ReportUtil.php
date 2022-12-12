@@ -86,6 +86,11 @@ class ReportUtil
         return $this->deviceRepository->findBy(['user'=>null]);
     }
 
+    public function reportHardDiskType(): array
+    {
+        $devices = $this->deviceRepository->findAll();
+        return $devices;
+    }
 //    public function getWeatherForCountryAndCity(string $countryCode, string $cityName){
 //        $cityrep = $this->cityRepository->findBy([
 //            'country' => $countryCode,

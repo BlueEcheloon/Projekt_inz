@@ -6,40 +6,44 @@
             <div class="card-icon">
                 <i class="material-icons">list</i>
             </div>
-            <h4 class="card-title">Windows counter</h4>
+            <h4 class="card-title">Device with no user counter</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 {% if is_granted('ROLE_OWNER') %}
                 {% elseif is_granted('ROLE_REPORT_GEN') %}
-                <div class="row border-bottom">
-                    <div class="col text-center">
-                        <button class="btn btn-warning mb-3 exportWarranty">Export table to Excel Spreadsheet</button>
+                    <div class="row border-bottom">
+                        <div class="col text-center">
+                            <button class="btn btn-warning mb-3 DeviceNoUser">Export table to Excel Spreadsheet</button>
+                        </div>
                     </div>
-                </div>
                 {% endif %}
-                <table class="table" id="warrantylist" data-cols-width="25,8">
+                <table class="table" id="devicenouserlist" data-cols-width="25,8">
                     <thead>
                     <tr>
                         <th>Device Name</th>
-                        <th>Warranty exp</th>
+                        <th>Type</th>
+                        <th>IP</th>
+                        <th>Size in GB</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for device in devices %}
                         <tr>
-                            <td>{{ device.name }}</td>
-                            <td>{% if device.specification %}
-                                    {{ device.specification.warrantyExp|date("Y-m-d") }}
-                                {% else %}
-                                    No Spec
-                                    {% endif %}
-                            </td>
+                        <td>{{ device.name }}</td>
+                            <td>{{ device.type }}</td>
+                            <td>{{ device.ipaddress }}</td>
+                        <td>{% if device.specification %}
+                            {{ device.specification.harddisk }}
+                        {% else %}
+                            No Specification set
+                        {% endif %}
+                        </td>
                         </tr>
 
                     {% else %}
                         <tr>
-                            <td colspan="10" class="text-center">No OS Type found</td>
+                            <td colspan="10" class="text-center">No Device with Hard drive</td>
                             <td colspan="d-none"></td>
                         </tr>
                     {% endfor %}
@@ -59,15 +63,15 @@
     <script>
         $(document).ready(function () {
             $().ready(function () {
-                $(".exportWarranty").click(function (e){
+                $(".exportHardDisk").click(function (e){
                     let tableId = $(this).data("tid");
-                    let tableWarranty = document.querySelector("#warrantylist").cloneNode(true);
-                    tableWarranty.innerHTML = tableWarranty.innerHTML.replace(/>-</g,'><');
+                    let tableHardDisk = document.querySelector("#harddisklist").cloneNode(true);
+                    tableHardDisk.innerHTML = tableHardDisk.innerHTML.replace(/>-</g,'><');
 
-                    let name = 'Warranty_exp.xlsx';
-                    let book = TableToExcel.tableToBook(tableWarranty,{
+                    let name = 'Hard_disk.xlsx';
+                    let book = TableToExcel.tableToBook(tableHardDisk,{
                         sheet:{
-                            name: "Warranty List"
+                            name: "Hard disk table"
                         }
                     });
                     TableToExcel.save(book,name)

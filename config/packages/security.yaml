@@ -22,6 +22,10 @@ security:
             logout:
                 path: app_logout
                 target: app_login
+    role_hierarchy:
+      ROLE_ADMIN: [ROLE_USER, ROLE_REPORT,ROLE_REPORT_GEN]
+      ROLE_OWNER: [ROLE_USER, ROLE_REPORT]
+      ROLE_MANAGER: [ROLE_USER,ROLE_REPORT_GEN]
 #        secured_area:
 #            # ...
 #            form_login:
@@ -37,11 +41,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/manager, roles: ROLE_MANAGER }
-         - { path: ^/owner, roles: ROLE_OWNER }
+         - { path: ^/home, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
+         - { path: ^/device, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
+         - { path: ^/report, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
+         - { path: ^/worker, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
+         - { path: ^/specification, roles: ROLE_ADMIN}
+         - { path: ^/registration, roles: ROLE_ADMIN}
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/profile, roles: ROLE_USER }
+#         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

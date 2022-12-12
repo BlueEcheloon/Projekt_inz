@@ -85,6 +85,11 @@
                     <h3 class="card-title">User - Info</h3>
                 </div>
                 <div class="card-body">
+                    {% if worker==null %}
+                    <div class="col text-center">
+                        <h4>There is no assigned user for this device</h4>
+                    </div>
+                    {% else %}
                     <div class="table-responsive">
                         <table class="table">
                             <tbody>
@@ -108,17 +113,18 @@
                             </tr>
                             </tbody>
                         </table>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <div class="col text-center">
-                                <a class="btn btn-primary" href="{{ path('app_device_edit_worker', {'id': device.id}) }}">
-                                    <i class="material-icons">
-                                        manage_accounts
-                                    </i>
-                                    <p>Change User</p>
-                                </a>
-                            </div>
-                        {% endif %}
                     </div>
+                    {% endif %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <div class="col text-center">
+                            <a class="btn btn-primary" href="{{ path('app_device_edit_worker', {'id': device.id}) }}">
+                                <i class="material-icons">
+                                    manage_accounts
+                                </i>
+                                <p>Change User</p>
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
