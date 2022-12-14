@@ -48,6 +48,18 @@ class WorkerRepository extends ServiceEntityRepository
         $result = $query->getResult();
         return $result;
     }
+//
+//    public function workersWithoutDevice($workers):array{
+//        $table = $this->createQueryBuilder('d')
+//            ->where('d.user IN (:us)')
+//            ->setParameter('us',$workers)
+//            ->select('d.manufacturer,d.model, count(d.model) as counter')
+//            ->addGroupBy('d.model,d.manufacturer')
+//            ->getQuery()
+//            ->getResult()
+//        ;
+//        return $table;
+//    }
 
 //    /**
 //     * @return Worker[] Returns an array of Worker objects

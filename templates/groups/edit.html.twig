@@ -3,11 +3,19 @@
 {% block title %}Edit Groups{% endblock %}
 
 {% block body %}
-    <h1>Edit Groups</h1>
-
-    {{ include('groups/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_groups_index') }}">back to list</a>
-
-    {{ include('groups/_delete_form.html.twig') }}
+    <div class="card">
+        <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+                <i class="material-icons">groups</i>
+            </div>
+            <h3 class="card-title">Edit Groups</h3>
+        </div>
+        <div class="card-body">
+            {{ include('groups/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('groups/_delete_form.html.twig') }}
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{{ path('app_groups_index') }}">back to list</a>
+        </div>
+    </div>
 {% endblock %}

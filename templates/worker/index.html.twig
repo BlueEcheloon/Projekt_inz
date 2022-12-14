@@ -67,7 +67,9 @@
                                 <a href="{{ path('app_worker_show', {'id': worker.id}) }}">
                                     <i class="material-icons">open_in_new</i>
                                 </a>
-                                <a href="{{ path('app_worker_edit', {'id': worker.id}) }}">edit</a>
+                                <a href="{{ path('app_worker_edit', {'id': worker.id}) }}">
+                                    <i class="material-icons">edit</i>
+                                </a>
                             </td>
                         </tr>
                     {% else %}
@@ -78,9 +80,12 @@
                     </tbody>
                 </table>
             </div>
+                    <div class="col text-center">
+                        <a class="btn btn-success btn-sm" href="{{ path('app_worker_new') }}">Add new Worker</a>
+                    </div>
         </div>
-        <a href="{{ path('app_worker_new') }}">Create new</a>
         {% endif %}
+    </div>
 {% endblock %}
 {% block add_script%}
     <script>

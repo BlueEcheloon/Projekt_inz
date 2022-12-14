@@ -3,9 +3,18 @@
 {% block title %}New Specification{% endblock %}
 
 {% block body %}
-    <h1>Create new Specification</h1>
-
-    {{ include('specification/_form.html.twig') }}
-
-    <a href="{{ path('app_specification_index') }}">back to list</a>
+    <div class="card">
+        <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+                <i class="material-icons">developer_board</i>
+            </div>
+            <h3 class="card-title">Create new Specification</h3>
+        </div>
+        <div class="card-body">
+            {{ include('specification/_form.html.twig') }}
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{{ path('app_device_index') }}">Skip without Specification</a>
+        </div>
+    </div>
 {% endblock %}

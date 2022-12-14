@@ -62,7 +62,9 @@
                     {% endfor %}
                     </tbody>
                 </table>
-                <a href="{{ path('app_groups_new') }}">Create new</a>
+                <div class="col text-center">
+                    <a class="btn btn-success btn-sm" href="{{ path('app_groups_new') }}">Create new Group</a>
+                </div>
             {% endif %}
         </div>
     </div>

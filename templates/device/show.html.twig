@@ -205,7 +205,7 @@
                                         <div class="row justify-content-center">
                                             {% if is_granted('ROLE_ADMIN') %}
                                                 <div class="col-2">
-                                                    <a class="btn" href="{{ path('app_comment_edit', {'id': comment.id, 'deviceId': comment.device.id}) }}">
+                                                    <a class="btn btn-warning" href="{{ path('app_comment_edit', {'id': comment.id, 'deviceId': comment.device.id}) }}">
                                                         <i class="material-icons">edit</i>
                                                     </a>
                                                 </div>

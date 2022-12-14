@@ -8,6 +8,7 @@ use App\Entity\Worker;
 use App\Repository\DeviceRepository;
 use App\Repository\SpecificationRepository;
 use App\Repository\WorkerRepository;
+use Doctrine\Common\Collections\Criteria;
 
 class ReportUtil
 {
@@ -81,6 +82,20 @@ class ReportUtil
         $workers = $this->workerRepository->findBy(['ad_group'=>$group]);
         return $this->deviceRepository->findBy(['user'=>$workers]);
     }
+
+//    public function reportWorker_device(): array
+//    {
+//        $criteria = new Criteria();
+//        $criteria->where(Criteria::expr()->);
+//        $workers = $this->workerRepository->findAll();
+//        return $workers;
+//    }
+//
+//    public function reportWorker_device_group($group): array
+//    {
+//        $workers = $this->workerRepository->findBy(['ad_group'=>$group]);
+//        return $this->deviceRepository->findBy(['user'=>$workers]);
+//    }
 
     public  function reportDeviceWithoutUser(): array{
         return $this->deviceRepository->findBy(['user'=>null]);

@@ -96,6 +96,21 @@ class ReportController extends AbstractController
         ]);
     }
 
+    #[Route('/user_device', name: 'app_report_user_device')]
+    public function user_device(ReportUtil $reportUtil): Response
+    {
+        $user = $this->getUser();
+        if($this->isGranted('ROLE_MANAGER')){
+            $admin_group=$user->getAdminGroup();
+            $workers = $reportUtil->reportWorker_device_group($admin_group);
+        }else{
+            $workers = $reportUtil->reportWorker_device();
+        }
+        return $this->render("report/warranty_exp.html.twig",[
+            'workers'=>$workers
+        ]);
+    }
+
     #[IsGranted("ROLE_REPORT")]
     #[Route('/device_user', name: 'app_report_device_user')]
     public function device_user(ReportUtil $reportUtil): Response

@@ -3,10 +3,18 @@
 {% block title %}Set User for Device{% endblock %}
 
 {% block body %}
-    <h3>Set User for Device</h3>
-
-    {{ include('device/_form_edit_worker.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_device_show',{'id': device.id}) }}">back to Device</a>
-
+    <div class="card">
+        <div class="card-header card-header-icon card-header-success">
+            <div class="card-icon">
+                <i class="material-icons">manage_accounts</i>
+            </div>
+            <h3 class="card-title">Set User for Device</h3>
+        </div>
+        <div class="card-body">
+            {{ include('device/_form_edit_worker.html.twig', {'button_label': 'Update'}) }}
+        </div>
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{{ path('app_device_show',{'id': device.id}) }}">back to device</a>
+        </div>
+    </div>
 {% endblock %}

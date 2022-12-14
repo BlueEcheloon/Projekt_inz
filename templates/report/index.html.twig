@@ -40,6 +40,10 @@
                         <td><a href="{{ path('app_report_warranty_exp') }}">Warranty expiration</a></td>
                         <td></td>
                     </tr>
+{#                    <tr>#}
+{#                        <td><a href="{{ path('app_report_user_device') }}">Users without Device</a></td>#}
+{#                        <td></td>#}
+{#                    </tr>#}
                     {% if is_granted('ROLE_REPORT') %}
                     <tr>
                         <td><a href="{{ path('app_report_device_user') }}">Device without User</a></td>
