@@ -36,7 +36,7 @@ class WorkerController extends AbstractController
     }
 
     #[Route('/new', name: 'app_worker_new', methods: ['GET', 'POST'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_EDIT_WORKER")]
     public function new(Request $request, WorkerRepository $workerRepository): Response
     {
         $worker = new Worker();
@@ -47,7 +47,7 @@ class WorkerController extends AbstractController
             $workerRepository->save($worker, true);
             $this->addFlash(
                 'notice',
-                'A new Worker has been added'
+                'A new User has been added'
             );
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,7 +67,7 @@ class WorkerController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_worker_edit', methods: ['GET', 'POST'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_EDIT_WORKER")]
     public function edit(Request $request, Worker $worker, WorkerRepository $workerRepository): Response
     {
         $form = $this->createForm(WorkerType::class, $worker);
@@ -77,7 +77,7 @@ class WorkerController extends AbstractController
             $workerRepository->save($worker, true);
             $this->addFlash(
                 'notice',
-                'Worker has been edited'
+                'User has been edited'
             );
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -89,7 +89,7 @@ class WorkerController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_worker_delete', methods: ['POST'])]
-    #[IsGranted("ROLE_ADMIN")]
+    #[IsGranted("ROLE_EDIT_WORKER")]
     public function delete(Request $request, Worker $worker, WorkerRepository $workerRepository, DeviceRepository $deviceRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$worker->getId(), $request->request->get('_token'))) {
@@ -97,7 +97,7 @@ class WorkerController extends AbstractController
             $workerRepository->remove($worker, true);
             $this->addFlash(
                 'notice',
-                'Worker has been removed'
+                'User has been removed'
             );
         }
 

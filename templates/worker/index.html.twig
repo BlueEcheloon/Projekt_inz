@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Worker index{% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- Material Kit CSS -->
+    <link href="{{ asset("mdp/assets/css/material-dashboard.css?v=2.2.2") }}" rel="stylesheet" />
+    <link href="{{ asset('device_styl.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block body %}
     <div class="card">
         <div class="card-header card-header-success card-header-icon">
@@ -52,7 +58,7 @@
                         <th>Surname</th>
                         <th>Username</th>
                         <th>Description</th>
-                        <th>actions</th>
+                        <th class="text-center" data-exclude="true">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -64,12 +70,14 @@
                             <td>{{ worker.username }}</td>
                             <td>{{ worker.description }}</td>
                             <td class="td-actions text-right">
-                                <a href="{{ path('app_worker_show', {'id': worker.id}) }}">
-                                    <i class="material-icons">open_in_new</i>
-                                </a>
-                                <a href="{{ path('app_worker_edit', {'id': worker.id}) }}">
-                                    <i class="material-icons">edit</i>
-                                </a>
+                                <div class="row justify-content-center">
+                                    <div class="col-2">
+                                        <a class="btn btn-warning" href="{{ path('app_worker_edit', {'id': worker.id}) }}">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    </div>
+                                    {{ include('worker/_delete_form.html.twig') }}
+                                </div>
                             </td>
                         </tr>
                     {% else %}
@@ -80,9 +88,11 @@
                     </tbody>
                 </table>
             </div>
-                    <div class="col text-center">
-                        <a class="btn btn-success btn-sm" href="{{ path('app_worker_new') }}">Add new Worker</a>
-                    </div>
+                    {% if is_granted('ROLE_EDIT_WORKER') %}
+                        <div class="col text-center">
+                            <a class="btn btn-success btn-sm" href="{{ path('app_worker_new') }}">Add new User</a>
+                        </div>
+                    {% endif %}
         </div>
         {% endif %}
     </div>
