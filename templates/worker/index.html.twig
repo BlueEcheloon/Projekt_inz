@@ -19,7 +19,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 {% if is_granted('ROLE_OWNER') %}
-                    <table class="table" id="workerlist">
+                    <table class="table" id="workerlist2">
                         <thead>
                         <thead>
                         <tr>
@@ -28,6 +28,7 @@
                             <th>Surname</th>
                             <th>Username</th>
                             <th>Description</th>
+                            <th>Ad Group</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,7 @@
                                 <td>{{ worker.surname }}</td>
                                 <td>{{ worker.username }}</td>
                                 <td>{{ worker.description }}</td>
+                                <td>{{ worker.adGroup }}</td>
                             </tr>
                         {% else %}
                             <tr>
@@ -58,6 +60,7 @@
                         <th>Surname</th>
                         <th>Username</th>
                         <th>Description</th>
+                        <th>AD group</th>
                         <th class="text-center" data-exclude="true">Action</th>
                     </tr>
                     </thead>
@@ -69,6 +72,7 @@
                             <td>{{ worker.surname }}</td>
                             <td>{{ worker.username }}</td>
                             <td>{{ worker.description }}</td>
+                            <td>{{ worker.adGroup }}</td>
                             <td class="td-actions text-right">
                                 <div class="row justify-content-center">
                                     <div class="col-2">
@@ -105,7 +109,19 @@
                     "columnDefs": [
                         {
                             "orderable": false,
-                            targets: [4,5]
+                            targets: [5,6]
+                        }
+                    ],
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
+            })
+            $().ready(function () {
+                let workerTable = $("#workerlist2").DataTable({
+                    "columnDefs": [
+                        {
+                            "orderable": false,
+                            targets: [5]
                         }
                     ],
                     "order": [[0,  'asc']],

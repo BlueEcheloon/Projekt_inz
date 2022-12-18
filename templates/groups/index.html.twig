@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Groups index{% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <!-- Material Kit CSS -->
+    <link href="{{ asset("mdp/assets/css/material-dashboard.css?v=2.2.2") }}" rel="stylesheet" />
+    <link href="{{ asset('device_styl.css') }}" rel="stylesheet"/>
+{% endblock %}
 {% block body %}
     <div class="card">
         <div class="card-header card-header-success card-header-icon">
@@ -38,7 +44,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
-                        <th>actions</th>
+                        <th class="text-center" data-exclude="true">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,13 +52,15 @@
                         <tr>
                             <td>{{ group.id }}</td>
                             <td>{{ group.name }}</td>
-                            <td>
-                                <a href="{{ path('app_groups_show', {'id': group.id}) }}">
-                                    <i class="material-icons">open_in_new</i>
-                                </a>
-                                <a href="{{ path('app_groups_edit', {'id': group.id}) }}">
-                                    <i class="material-icons">edit</i>
-                                </a>
+                            <td class="td-actions text-right">
+                                <div class="row justify-content-center">
+                                    <div class="col-2">
+                                        <a class="btn btn-warning" href="{{ path('app_groups_edit', {'id': group.id}) }}">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                    </div>
+                                    {{ include('groups/_delete_form.html.twig') }}
+                                </div>
                             </td>
                         </tr>
                     {% else %}

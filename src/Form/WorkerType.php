@@ -23,7 +23,6 @@ class WorkerType extends AbstractType
                 'class'=>Groups::class,
                 'choice_label' => 'name',
                 'required' => false,
-                'placeholder' => 'Not Set',
             ])
         ;
     }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Groups;
 use App\Form\GroupsType;
 use App\Repository\GroupsRepository;
+use App\Service\ReportUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,9 +79,13 @@ class GroupsController extends AbstractController
 
     #[Route('/{id}', name: 'app_groups_delete', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function delete(Request $request, Groups $group, GroupsRepository $groupsRepository): Response
+    public function delete(Request $request, Groups $group, GroupsRepository $groupsRepository, ReportUtil $reportUtil): Response
     {
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
+            $workers=$group->getWorkers();
+            foreach ($workers as $worker){
+                $worker->setAdGroup(null);
+            }
             $groupsRepository->remove($group, true);
             $this->addFlash(
                 'notice',
