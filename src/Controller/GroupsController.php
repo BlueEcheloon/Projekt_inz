@@ -79,7 +79,7 @@ class GroupsController extends AbstractController
 
     #[Route('/{id}', name: 'app_groups_delete', methods: ['POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function delete(Request $request, Groups $group, GroupsRepository $groupsRepository, ReportUtil $reportUtil): Response
+    public function delete(Request $request, Groups $group, GroupsRepository $groupsRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$group->getId(), $request->request->get('_token'))) {
             $workers=$group->getWorkers();
