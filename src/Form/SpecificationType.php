@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Specification;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,9 +22,12 @@ class SpecificationType extends AbstractType
             ->add('harddisk')
             ->add('antivirus')
             ->add('serial_number')
-            ->add('date_of_purchase')
-            ->add('warranty_exp')
-//            ->add('device')
+            ->add('date_of_purchase',DateType::class,[
+                'attr'=>['class'=>'datetimepicker form-control col-4'],
+                'widget'=>'single_text'])
+            ->add('warranty_exp',DateType::class,[
+                'attr'=>['class'=>'datetimepicker form-control col-4'],
+                'widget'=>'single_text'])
             ->add('status',ChoiceType::class,[
                 'choices'=>[
                     'Setting up'=>[

@@ -14,11 +14,11 @@ class CommentType extends AbstractType
     {
         $builder
             ->add('description')
-            ->add('date')
+//            ->add('date')
 //            ->add('device')
-//            ->add('date',DateType::class,[
-//                'attr'=>['class'=>'datetimepicker form-control'],
-//        ])
+            ->add('date',DateType::class,[
+                'attr'=>['class'=>'datetimepicker form-control col-4'],
+                'widget'=>'single_text'])
         ;
     }
 
