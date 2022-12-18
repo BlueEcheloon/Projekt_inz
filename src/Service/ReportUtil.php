@@ -82,6 +82,15 @@ class ReportUtil
         $workers = $this->workerRepository->findBy(['ad_group'=>$group]);
         return $this->deviceRepository->findBy(['user'=>$workers]);
     }
+    public function workerDevices($group):array
+    {
+        $workers = $this->workerRepository->findBy(['ad_group'=>$group]);
+        return $this->deviceRepository->findBy(['user'=>$workers]);
+    }
+    public function workerGroup($group): array
+    {
+        return $this->workerRepository->findBy(['ad_group'=>$group]);
+    }
 
 //    public function reportWorker_device(): array
 //    {

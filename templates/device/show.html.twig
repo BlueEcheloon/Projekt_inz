@@ -139,42 +139,58 @@
                     <h3 class="card-title">Specification</h3>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <th>OS. version</th>
-                                <td>{{ specification.osVersion }}</td>
-                            </tr>
-                            <tr>
-                                <th>Memory</th>
-                                <td>{{ specification.memory }}</td>
-                            </tr>
-                            <tr>
-                                <th>Processor</th>
-                                <td>{{ specification.processor }}</td>
-                            </tr>
-                            <tr>
-                                <th>Motherboard</th>
-                                <td>{{ specification.motherboard }}</td>
-                            </tr>
-                            <tr>
-                                <th>Graphic Card</th>
-                                <td>{{ specification.graphics }}</td>
-                            </tr>
-                            </tbody>
-                            {#        {% for specification in device.specifications %}#}
-                            {#            <tr>...</tr>#}
-                            {#        {% endfor %}#}
-                        </table>
+                    {% if specification == null %}
+                        <div class="col text-center">
+                            <h4>There is no specification for this device</h4>
+                        </div>
                         {% if is_granted('ROLE_ADMIN') %}
                             <div class="col text-center">
-                                <a class="btn btn-primary" href="{{ path('app_specification_edit', {'id': device.specification.id, 'device_id': device.id}) }}">
-                                    Edit Specification
+                                <a class="btn btn-success" href="{{ path('app_specification_new', {'device_id': device.id}) }}">
+                                    <i class="material-icons">
+                                        settings_suggest
+                                    </i>
+                                    <p>Add Specification</p>
                                 </a>
                             </div>
                         {% endif %}
-                    </div>
+                    {% else %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <th>OS. version</th>
+                                    <td>{{ specification.osVersion }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Memory</th>
+                                    <td>{{ specification.memory }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Processor</th>
+                                    <td>{{ specification.processor }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Motherboard</th>
+                                    <td>{{ specification.motherboard }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Graphic Card</th>
+                                    <td>{{ specification.graphics }}</td>
+                                </tr>
+                                </tbody>
+                                {#        {% for specification in device.specifications %}#}
+                                {#            <tr>...</tr>#}
+                                {#        {% endfor %}#}
+                            </table>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="col text-center">
+                                    <a class="btn btn-primary" href="{{ path('app_specification_edit', {'id': device.specification.id, 'device_id': device.id}) }}">
+                                        Edit Specification
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

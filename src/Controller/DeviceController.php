@@ -10,6 +10,7 @@ use App\Repository\DeviceRepository;
 use App\Repository\GroupsRepository;
 use App\Repository\SpecificationRepository;
 use App\Repository\WorkerRepository;
+use App\Service\ReportUtil;
 use phpDocumentor\Reflection\Types\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,11 +23,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeviceController extends AbstractController
 {
     #[Route('/', name: 'app_device_index', methods: ['GET'])]
-    public function index(DeviceRepository $deviceRepository, SpecificationRepository $specificationRepository): Response
+    public function index(DeviceRepository $deviceRepository, ReportUtil $reportUtil): Response
     {
-        return $this->render('device/index.html.twig', [
-            'devices' => $deviceRepository->findAll(),
-        ]);
+        $user = $this->getUser();
+        if($this->isGranted('ROLE_MANAGER')){
+            $admin_group=$user->getAdminGroup();
+            $devices = $reportUtil->workerDevices($admin_group);
+            return $this->render('device/index.html.twig', [
+                'devices' => $devices,
+            ]);
+        }else{
+            return $this->render('device/index.html.twig', [
+                'devices' => $deviceRepository->findAll(),
+            ]);
+        }
     }
 
     #[Route('/new', name: 'app_device_new', methods: ['GET', 'POST'])]
@@ -56,33 +66,58 @@ class DeviceController extends AbstractController
     #[Route('/{id}', name: 'app_device_show', methods: ['GET'])]
     public function show(Device $device, SpecificationRepository $specificationRepository, WorkerRepository $workerRepository, CommentRepository $commentRepository, GroupsRepository $groupsRepository): Response
     {
-        $spec=$specificationRepository->findByDevice($device);
+        if($specificationRepository->findByDevice($device)){
+            $spec=$specificationRepository->findByDevice($device);
+        }
+        else{
+            $spec=null;
+        }
         $comments=$commentRepository->findByDevice($device);
         if ($device->getUser()!=null){
             $worker=$workerRepository->findBy(['id'=>$device->getUser()]);
             $group=$groupsRepository->findByWorker($worker[0]);
-            return $this->render('device/show.html.twig', [
-                'device' => $device,
-                'specification' =>$spec[0],
-                'worker' =>$worker[0],
-                'comments'=>$comments,
-                'group' => $group[0],
-            ]);
+            if($spec!=null){
+                return $this->render('device/show.html.twig', [
+                    'device' => $device,
+                    'specification' =>$spec[0],
+                    'worker' =>$worker[0],
+                    'comments'=>$comments,
+                    'group' => $group[0],
+                ]);
+            }else{
+                return $this->render('device/show.html.twig', [
+                    'device' => $device,
+                    'specification' =>null,
+                    'worker' =>$worker[0],
+                    'comments'=>$comments,
+                    'group' => $group[0],
+                ]);
+            }
         }else{
-            return $this->render('device/show.html.twig', [
-                'device' => $device,
-                'specification' =>$spec[0],
-                'comments'=>$comments,
-                'worker'=>null,
-                'group' => null,
-            ]);
+            if($spec!=null){
+                return $this->render('device/show.html.twig', [
+                    'device' => $device,
+                    'specification' =>$spec[0],
+                    'comments'=>$comments,
+                    'worker'=>null,
+                    'group' => null,
+                ]);
+            }else{
+                return $this->render('device/show.html.twig', [
+                    'device' => $device,
+                    'specification' =>null,
+                    'comments'=>$comments,
+                    'worker'=>null,
+                    'group' => null,
+                ]);
+            }
         }
 //        $spec=$specificationRepository->findOneBy($device);
     }
 
     #[Route('/{id}/edit', name: 'app_device_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function edit(Request $request, Device $device, DeviceRepository $deviceRepository): Response
+    public function edit(Request $request, Device $device, DeviceRepository $deviceRepository, $id): Response
     {
         $form = $this->createForm(DeviceType::class, $device);
         $form->handleRequest($request);
@@ -94,7 +129,7 @@ class DeviceController extends AbstractController
                 'Device has been edited'
             );
 
-            return $this->redirectToRoute('app_device_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_device_show', ['id'=>$id], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('device/edit.html.twig', [

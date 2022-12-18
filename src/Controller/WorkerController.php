@@ -7,6 +7,7 @@ use App\Entity\Worker;
 use App\Form\WorkerType;
 use App\Repository\DeviceRepository;
 use App\Repository\WorkerRepository;
+use App\Service\ReportUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,11 +19,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class WorkerController extends AbstractController
 {
     #[Route('/', name: 'app_worker_index', methods: ['GET'])]
-    public function index(WorkerRepository $workerRepository): Response
+    public function index(WorkerRepository $workerRepository, ReportUtil $reportUtil): Response
     {
-        return $this->render('worker/index.html.twig', [
-            'workers' => $workerRepository->findAll(),
-        ]);
+        $user = $this->getUser();
+        if($this->isGranted('ROLE_MANAGER')){
+            $admin_group=$user->getAdminGroup();
+            $workers = $reportUtil->workerGroup($admin_group);
+            return $this->render('worker/index.html.twig', [
+                'workers' => $workers,
+            ]);
+        }else{
+            return $this->render('worker/index.html.twig', [
+                'workers' => $workerRepository->findAll(),
+            ]);
+        }
     }
 
     #[Route('/new', name: 'app_worker_new', methods: ['GET', 'POST'])]

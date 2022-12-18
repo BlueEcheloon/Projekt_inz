@@ -67,9 +67,12 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col text-center">
-                <a class="btn btn-success btn-sm" href="{{ path('app_device_new') }}">Add new Device</a>
-            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="col text-center">
+                    <a class="btn btn-success btn-sm" href="{{ path('app_device_new') }}">Add new Device</a>
+                </div>
+            {% endif %}
+
         </div>
     </div>
 {% endblock %}
@@ -81,7 +84,7 @@
                    "columnDefs": [
                        {
                            "orderable": false,
-                           targets: [5,7]
+                           targets: [7]
 
                        }
                    ],
