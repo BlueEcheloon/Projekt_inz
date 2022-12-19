@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Admin;
+use App\Entity\Groups;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -31,8 +33,16 @@ class RegistrationFormType extends AbstractType
                     'Manager'=>'ROLE_MANAGER',
                 ]
             ])
+            ->add('adminGroup',EntityType::class,[
+                'class'=>Groups::class,
+                'attr'=>['class'=>'selectpicker col-4'],
+                'choice_label' => 'name',
+                'required' => false,
+                'placeholder' => 'Not Set',
+            ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'compound'=>true,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
