@@ -177,6 +177,42 @@
                                     <th>Graphic Card</th>
                                     <td>{{ specification.graphics }}</td>
                                 </tr>
+                                <tr>
+                                    <th>Hard disk</th>
+                                    <td>{{ specification.harddisk }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Antivirus</th>
+                                    <td>{{ specification.antivirus }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Serial number</th>
+                                    <td>{{ specification.serialNumber }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Date of purchase</th>
+                                    <td>{{ specification.dateOfPurchase|date("d/m/Y") }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Warranty expiration</th>
+                                    <td>{{ specification.warrantyExp|date("d/m/Y") }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>{{ specification.status }} {% if device.specification.status =='boxed' %}
+                                            <i class="material-icons">inventory_2</i>
+                                        {% elseif device.specification.status =='ready'%}
+                                            <i class="material-icons">inventory</i>
+                                        {% elseif device.specification.status =='working'%}
+                                            <i class="material-icons">face</i>
+                                        {% elseif device.specification.status =='faulty'%}
+                                            <i class="material-icons">bug_report</i>
+                                        {% elseif device.specification.status =='service'%}
+                                            <i class="material-icons">store</i>
+                                        {% elseif device.specification.status =='destroy'%}
+                                            <i class="material-icons">delete_forever</i>
+                                        {% endif %}</td>
+                                </tr>
                                 </tbody>
                                 {#        {% for specification in device.specifications %}#}
                                 {#            <tr>...</tr>#}

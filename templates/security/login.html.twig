@@ -8,7 +8,9 @@
         </div>
         <div class="card-body">
             {% if error %}
-                <div class="alert alert-danger text-danger d-none text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                <div class="col text-center">
+                    <div class="alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                </div>
             {% endif %}
 
             {% if app.user %}

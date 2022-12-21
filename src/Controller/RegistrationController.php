@@ -41,11 +41,16 @@ class RegistrationController extends AbstractController
                 'notice',
                 'A new User has been created'
             );
-            return $userAuthenticator->authenticateUser(
-                $user,
-                $authenticator,
-                $request
-            );
+//            return $userAuthenticator->authenticateUser(
+//                $user,
+//                $authenticator,
+//                $request
+//            );
+            $admin=$this->getUser();
+            return $this->render('home/index.html.twig', [
+                'admin'=>$admin,
+                'controller_name' => 'HomeController',
+            ]);
         }
 
         return $this->render('registration/register.html.twig', [
