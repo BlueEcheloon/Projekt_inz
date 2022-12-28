@@ -44,7 +44,7 @@ security:
          - { path: ^/home, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
          - { path: ^/device, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
          - { path: ^/report, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
-         - { path: ^/worker, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
+         - { path: ^/user, roles: [ROLE_ADMIN, ROLE_MANAGER,ROLE_OWNER] }
          - { path: ^/specification, roles: ROLE_ADMIN}
          - { path: ^/registration, roles: ROLE_ADMIN}
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

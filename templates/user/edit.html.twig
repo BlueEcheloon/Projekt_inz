@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Worker{% endblock %}
+{% block title %}Edit Worker{% endblock %}
 
 {% block body %}
     <div class="card">
@@ -8,10 +8,11 @@
             <div class="card-icon">
                 <i class="material-icons">people</i>
             </div>
-            <h3 class="card-title">Create new User</h3>
+            <h3 class="card-title">Edit User</h3>
         </div>
         <div class="card-body">
-            {{ include('worker/_form.html.twig') }}
+            {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+            {{ include('user/_delete_form.html.twig') }}
         </div>
         <div class="col text-center">
             <a class="btn btn-primary" href="{{ path('app_worker_index') }}">back to list</a>

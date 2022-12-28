@@ -80,7 +80,7 @@ class DeviceController extends AbstractController
                 return $this->render('device/show.html.twig', [
                     'device' => $device,
                     'specification' =>$spec[0],
-                    'worker' =>$worker[0],
+                    'user' =>$worker[0],
                     'comments'=>$comments,
                     'group' => $group[0],
                 ]);
@@ -88,7 +88,7 @@ class DeviceController extends AbstractController
                 return $this->render('device/show.html.twig', [
                     'device' => $device,
                     'specification' =>null,
-                    'worker' =>$worker[0],
+                    'user' =>$worker[0],
                     'comments'=>$comments,
                     'group' => $group[0],
                 ]);
@@ -99,7 +99,7 @@ class DeviceController extends AbstractController
                     'device' => $device,
                     'specification' =>$spec[0],
                     'comments'=>$comments,
-                    'worker'=>null,
+                    'user'=>null,
                     'group' => null,
                 ]);
             }else{
@@ -107,7 +107,7 @@ class DeviceController extends AbstractController
                     'device' => $device,
                     'specification' =>null,
                     'comments'=>$comments,
-                    'worker'=>null,
+                    'user'=>null,
                     'group' => null,
                 ]);
             }

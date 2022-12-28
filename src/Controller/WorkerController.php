@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/worker')]
+#[Route('/user')]
 #[IsGranted("ROLE_USER")]
 class WorkerController extends AbstractController
 {
@@ -25,11 +25,11 @@ class WorkerController extends AbstractController
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $workers = $reportUtil->workerGroup($admin_group);
-            return $this->render('worker/index.html.twig', [
+            return $this->render('user/index.html.twig', [
                 'workers' => $workers,
             ]);
         }else{
-            return $this->render('worker/index.html.twig', [
+            return $this->render('user/index.html.twig', [
                 'workers' => $workerRepository->findAll(),
             ]);
         }
@@ -52,7 +52,7 @@ class WorkerController extends AbstractController
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('worker/new.html.twig', [
+        return $this->renderForm('user/new.html.twig', [
             'worker' => $worker,
             'form' => $form,
         ]);
@@ -61,7 +61,7 @@ class WorkerController extends AbstractController
     #[Route('/{id}', name: 'app_worker_show', methods: ['GET'])]
     public function show(Worker $worker): Response
     {
-        return $this->render('worker/show.html.twig', [
+        return $this->render('user/show.html.twig', [
             'worker' => $worker,
         ]);
     }
@@ -82,7 +82,7 @@ class WorkerController extends AbstractController
             return $this->redirectToRoute('app_worker_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('worker/edit.html.twig', [
+        return $this->renderForm('user/edit.html.twig', [
             'worker' => $worker,
             'form' => $form,
         ]);
