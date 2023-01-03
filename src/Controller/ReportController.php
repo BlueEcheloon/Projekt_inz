@@ -20,14 +20,10 @@ class ReportController extends AbstractController
             'controller_name' => 'ReportController',
         ]);
     }
-    // Role_Manufacturer_report Voter
     #[Route('/manufacturer', name: 'app_report_manufacturer')]
     public function manufacturer(ReportUtil $reportUtil): Response
     {
         $user = $this->getUser();
-//        if($this->isGranted('ROLE_ADMIN')){
-//            $manufacturers = $reportUtil->reportManufacturer();
-//        }
         if($this->isGranted('ROLE_MANAGER')){
             $admin_group=$user->getAdminGroup();
             $manufacturers=$reportUtil->reportManufacturer_worker($admin_group);

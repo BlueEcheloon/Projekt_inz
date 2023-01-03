@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
 use App\Entity\Groups;
 use App\Form\GroupsType;
 use App\Repository\GroupsRepository;
@@ -85,6 +86,10 @@ class GroupsController extends AbstractController
             $workers=$group->getWorkers();
             foreach ($workers as $worker){
                 $worker->setAdGroup(null);
+            }
+            $admins = $group->getAdmins();
+            foreach ($admins as $admin){
+                $admin->setAdminGroup(null);
             }
             $groupsRepository->remove($group, true);
             $this->addFlash(
