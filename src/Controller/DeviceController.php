@@ -11,7 +11,6 @@ use App\Repository\GroupsRepository;
 use App\Repository\SpecificationRepository;
 use App\Repository\WorkerRepository;
 use App\Service\ReportUtil;
-use phpDocumentor\Reflection\Types\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -112,7 +111,6 @@ class DeviceController extends AbstractController
                 ]);
             }
         }
-//        $spec=$specificationRepository->findOneBy($device);
     }
 
     #[Route('/{id}/edit', name: 'app_device_edit', methods: ['GET', 'POST'])]
@@ -140,7 +138,7 @@ class DeviceController extends AbstractController
 
     #[Route('/{id}/edit_worker', name: 'app_device_edit_worker', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_ADMIN")]
-    public function edit_worker(Request $request, Device $device, DeviceRepository $deviceRepository, SpecificationRepository $specificationRepository, $id): Response
+    public function edit_worker(Request $request, Device $device, DeviceRepository $deviceRepository, $id): Response
     {
         $form = $this->createForm(DeviceWorkerType::class, $device);
         $form->handleRequest($request);

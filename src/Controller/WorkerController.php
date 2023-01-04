@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Device;
 use App\Entity\Worker;
 use App\Form\WorkerType;
 use App\Repository\DeviceRepository;
@@ -90,7 +89,7 @@ class WorkerController extends AbstractController
 
     #[Route('/{id}', name: 'app_worker_delete', methods: ['POST'])]
     #[IsGranted("ROLE_EDIT_WORKER")]
-    public function delete(Request $request, Worker $worker, WorkerRepository $workerRepository, DeviceRepository $deviceRepository): Response
+    public function delete(Request $request, Worker $worker, WorkerRepository $workerRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$worker->getId(), $request->request->get('_token'))) {
             $worker->getDevice()->getSpecification()->setStatus('ready');
