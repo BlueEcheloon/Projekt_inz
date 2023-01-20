@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Worker;
 use App\Form\WorkerType;
-use App\Repository\DeviceRepository;
 use App\Repository\WorkerRepository;
 use App\Service\ReportUtil;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;

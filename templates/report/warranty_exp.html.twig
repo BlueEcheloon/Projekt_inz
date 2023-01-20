@@ -72,6 +72,10 @@
                     });
                     TableToExcel.save(book,name)
                 })
+                let warrantyTable = $("#warrantylist").DataTable({
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
             })
         })
     </script>

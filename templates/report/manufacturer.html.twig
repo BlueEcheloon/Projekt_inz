@@ -66,6 +66,10 @@
                     });
                     TableToExcel.save(book,name)
                 })
+                let manufacturerTable = $("#manufacturerlist").DataTable({
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
             })
         })
     </script>

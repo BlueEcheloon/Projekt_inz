@@ -76,6 +76,10 @@
                     });
                     TableToExcel.save(book,name)
                 })
+                let devicenouserTable = $("#devicenouserlist").DataTable({
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
             })
         })
     </script>

@@ -69,6 +69,10 @@
                     });
                     TableToExcel.save(book,name)
                 })
+                let modelTable = $("#modelList").DataTable({
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
             })
         })
     </script>

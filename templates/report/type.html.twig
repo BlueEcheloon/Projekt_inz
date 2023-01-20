@@ -66,6 +66,10 @@
                     });
                     TableToExcel.save(book,name)
                 })
+                let ostypeTable = $("#ostypelist").DataTable({
+                    "order": [[0,  'asc']],
+                    "pageLength": 25
+                });
             })
         })
     </script>
